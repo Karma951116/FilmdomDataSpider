@@ -13,9 +13,9 @@ class MysqlConnector:
                 password=None, database=None, charset=None):
         try:
             if self.connection is not None:
-                self.close()
+                self.connection.close()
             config = Config()
-            config.set_config_src('database.ini')
+            config.read_config_src('database.ini')
             self.connection = pymysql.connect(
                 host=config.config_parser.get('Mysql', 'host'),
                 user=config.config_parser.get('Mysql', 'user'),
