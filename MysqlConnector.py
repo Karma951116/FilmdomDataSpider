@@ -9,20 +9,28 @@ class MysqlConnector:
         self.cursor = None
         pass
 
-    def connect(self, host=None, user=None,
+    def connect(self, bDatabase=True, host=None, user=None,
                 password=None, database=None, charset=None):
         try:
             if self.connection is not None:
                 self.connection.close()
             config = Config()
-            config.read_config_src('database.ini')
-            self.connection = pymysql.connect(
-                host=config.config_parser.get('Mysql', 'host'),
-                user=config.config_parser.get('Mysql', 'user'),
-                password=config.config_parser.get('Mysql', 'password'),
-                database=config.config_parser.get('Mysql', 'database'),
-                charset=config.config_parser.get('Mysql', 'charset'),
-            )
+            config.read_config_src('general.ini')
+            if bDatabase:
+                self.connection = pymysql.connect(
+                    host=config.config_parser.get('Mysql', 'host') if host is None else host,
+                    user=config.config_parser.get('Mysql', 'user') if user is None else user,
+                    password=config.config_parser.get('Mysql', 'password') if password is None else password,
+                    database=config.config_parser.get('Mysql', 'database') if database is None else database,
+                    charset=config.config_parser.get('Mysql', 'charset') if charset is None else charset,
+                )
+            else:
+                self.connection = pymysql.connect(
+                    host=config.config_parser.get('Mysql', 'host') if host is None else host,
+                    user=config.config_parser.get('Mysql', 'user') if user is None else user,
+                    password=config.config_parser.get('Mysql', 'password') if password is None else password,
+                    charset=config.config_parser.get('Mysql', 'charset') if charset is None else charset,
+                )
             self.cursor = self.connection.cursor()
             print('mysql database: %s connected' % self.connection.db)
 
@@ -59,4 +67,7 @@ class MysqlConnector:
             print('Sql execute failed with %d : %s' % (e.args[0], e.args[1]))
             self.connection.rollback()
             return False
+
+    def connected(self):
+        return self.connection is not None
 

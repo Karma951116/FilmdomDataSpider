@@ -1,0 +1,17 @@
+# Spider for Movie and Actors Information
+# Excuete Order:
+# 1. movies_to_fetch: get all movies mid and name for target year
+# 2. any infromation part code
+# 3. process code
+
+# You'd better start from company inoformation when process data
+# Because table movies need company information
+# Order:
+# 1. output: company_basic append(create company id)
+# 2. raw:    movie_company match id and name
+# 3. output: participants append
+# 4. output: movies
+# 5. output: movie_company
+# 6. output: movie_day_boxoffice
+# 7. output: baidu_heat
+# 8. output: co_actors

@@ -5,6 +5,12 @@ import os
 class Config(object):
     # configure read/write class
     _config_root = os.path.dirname(os.path.abspath(__file__)) + '\\configs\\'
+    """
+    configparser hold the content read from config file
+    you can append or delete configs.After any operation
+    you should call write_config_src function to write 
+    settings to the file.
+    """
     config_parser = configparser.ConfigParser()
 
     def __init__(self):
